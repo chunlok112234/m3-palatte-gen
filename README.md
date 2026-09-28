@@ -13,14 +13,14 @@ Open `http://localhost:3000`. Use `npm run build` for a production build and `np
 
 ## Features
 
-- Single-seed and tri-color modes, editable HEX values, native color pickers, mood presets, and randomized inspiration.
+- Single-seed and tri-color modes, editable HEX, RGB, HSL, HSV and CMYK values, native color pickers, mood presets, and randomized inspiration.
 - Official HCT tonal palettes and 29 semantic roles. Tri-color mode independently derives secondary and tertiary palettes from their source colors while retaining primary-derived neutral palettes.
 - Side-by-side light and dark component previews, with an independent site appearance switch.
 - English and Traditional Chinese interface.
 - Click-to-copy swatches, a light/dark semantic token table, Markdown and rich HTML clipboard exports.
 - Downloadable CSS using `--md-sys-color-*` custom properties, automatic system appearance, and explicit `[data-theme="light"]` / `[data-theme="dark"]` overrides.
 
-Clipboard features require localhost or HTTPS and browser clipboard permission. Rich text copying provides HTML and plain-text clipboard formats.
+Color copying uses CSS syntax for HEX, RGB and HSL. HSV copies H S V values; CMYK copies `device-cmyk(...)` with an RGB fallback. Clipboard features require localhost or HTTPS and browser clipboard permission. Rich text copying provides HTML and plain-text clipboard formats.
 
 ## Validation
 
@@ -55,7 +55,7 @@ npm run test:e2e:report
 
 | Test file | Scenarios |
 | --- | --- |
-| `tests/e2e/colors.spec.ts` | Initial state; HEX normalization and invalid drafts; RGB, HSV and CMYK editing, ranges and CSS serialization; format switching; black conversion; native picker synchronization |
+| `tests/e2e/colors.spec.ts` | Initial state; HEX normalization and invalid drafts; RGB, HSL, HSV and CMYK editing, ranges and format-specific copying; format switching; black conversion; native picker synchronization |
 | `tests/e2e/palettes.spec.ts` | All 29 semantic roles against official Material color utilities; 78 tonal swatches; tri-color independence and retained seeds; six presets; deterministic random colors |
 | `tests/e2e/interface.spec.ts` | Result tabs; independent site appearance and preview interactions; Traditional Chinese translations; keyboard operation; 320, 390, 768 and 1440px layouts |
 | `tests/e2e/exports.spec.ts` | Swatch/token copy; Markdown and rich HTML payloads; translated exports; clipboard denial and recovery; toast dismissal/expiry; downloaded CSS values and the real browser cascade for automatic and explicit themes |

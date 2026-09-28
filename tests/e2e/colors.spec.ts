@@ -39,11 +39,12 @@ for (const value of ['', '#', '#123', '#GGGGGG', '12 456']) {
 
 const formats = [
   { name: 'RGB', labels: ['R', 'G', 'B'], values: ['255', '0', '0'], css: 'rgb(255 0 0)', invalid: ['-1', '256', '1.5', ''] },
-  { name: 'HSV', labels: ['H', 'S', 'V'], values: ['360', '100', '100'], css: 'hsl(360 100% 50%)', invalid: ['-1', '361', ''] },
+  { name: 'HSL', labels: ['H', 'S', 'L'], values: ['360', '100', '50'], css: 'hsl(360 100% 50%)', invalid: ['-1', '361', ''] },
+  { name: 'HSV', labels: ['H', 'S', 'V'], values: ['360', '100', '100'], css: '360 100 100', invalid: ['-1', '361', ''] },
   { name: 'CMYK', labels: ['C', 'M', 'Y', 'K'], values: ['0', '100', '100', '0'], css: 'device-cmyk(0% 100% 100% 0%, rgb(255 0 0))', invalid: ['-1', '101', ''] },
 ];
 for (const spec of formats) {
-  test(`${spec.name} editing converts to red and copies valid CSS`, async ({ page }) => {
+  test(`${spec.name} editing converts to red and copies the selected format`, async ({ page }) => {
     await format(page).selectOption(spec.name);
     for (const [i, label] of spec.labels.entries()) {
       await page.getByRole('spinbutton', { name: `Source color ${spec.name} ${label}`, exact: true }).fill(spec.values[i]);
@@ -72,8 +73,8 @@ for (const spec of formats) {
   }
 }
 
-test('HSV saturation/value and every CMYK channel enforce percentage limits', async ({ page }) => {
-  for (const [name, labels] of [['HSV', ['S', 'V']], ['CMYK', ['C', 'M', 'Y', 'K']]] as const) {
+test('HSL, HSV and CMYK percentage channels enforce their limits', async ({ page }) => {
+  for (const [name, labels] of [['HSL', ['S', 'L']], ['HSV', ['S', 'V']], ['CMYK', ['C', 'M', 'Y', 'K']]] as const) {
     await format(page).selectOption(name);
     for (const label of labels) {
       const input = page.getByRole('spinbutton', { name: `Source color ${name} ${label}`, exact: true });
@@ -97,7 +98,27 @@ test('format switching resets invalid drafts and represents black without NaN', 
   await format(page).selectOption('HSV');
   for (const input of await page.getByRole('spinbutton').all()) await expect(input).toHaveValue('0');
   await colorCopy(page).click();
+  expect(await clipboard(page)).toEqual({ 'text/plain': '0 0 0' });
+  await format(page).selectOption('HSL');
+  for (const input of await page.getByRole('spinbutton').all()) await expect(input).toHaveValue('0');
+  await colorCopy(page).click();
   expect(await clipboard(page)).toEqual({ 'text/plain': 'hsl(0 0% 0%)' });
+});
+
+test('HSL edits preserve the color when switching to HSV and HEX', async ({ page }) => {
+  await format(page).selectOption('HSL');
+  for (const [label, value] of [['H', '120'], ['S', '100'], ['L', '25']] as const) {
+    await page.getByRole('spinbutton', { name: `Source color HSL ${label}` }).fill(value);
+  }
+  await expect(page.locator('.color-value')).toHaveText('#008000');
+  await colorCopy(page).click();
+  expect(await clipboard(page)).toEqual({ 'text/plain': 'hsl(120 100% 25%)' });
+  await format(page).selectOption('HSV');
+  await expect(page.locator('.color-value')).toHaveText('#008000');
+  await colorCopy(page).click();
+  expect(await clipboard(page)).toEqual({ 'text/plain': '120 100 50.2' });
+  await format(page).selectOption('HEX');
+  await expect(source(page)).toHaveValue('#008000');
 });
 
 test('native picker updates active channels and clears invalid drafts', async ({ page }) => {

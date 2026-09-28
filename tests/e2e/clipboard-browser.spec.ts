@@ -7,7 +7,7 @@ test('Chromium writes plain text and rich HTML to the real browser clipboard', a
   test.skip(browserName !== 'chromium' || isMobile, 'Desktop Chromium clipboard permission integration');
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.goto('/');
-  await page.getByRole('button', { name: 'Source color Copy CSS color', exact: true }).click();
+  await page.getByRole('button', { name: 'Source color Copy color value', exact: true }).click();
   await expect(page.getByRole('status')).toHaveText('Copied to clipboard');
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe('#52796F');
   await page.getByRole('button', { name: 'Copy rich text', exact: true }).click();

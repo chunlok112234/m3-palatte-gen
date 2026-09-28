@@ -36,7 +36,7 @@ export const test = base.extend<{ clipboard: void }>({
 export { expect };
 export const source = (page: Page) => page.getByRole('textbox', { name: 'Source color', exact: true });
 export const format = (page: Page) => page.getByRole('combobox', { name: 'Source color Color format', exact: true });
-export const colorCopy = (page: Page) => page.getByRole('button', { name: 'Source color Copy CSS color', exact: true });
+export const colorCopy = (page: Page) => page.getByRole('button', { name: 'Source color Copy color value', exact: true });
 export const tokens = async (page: Page) => {
   await page.getByRole('tab', { name: /Color tokens/ }).click();
   await expect(page.locator('tbody tr')).toHaveCount(29);

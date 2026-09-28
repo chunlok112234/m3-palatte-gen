@@ -84,7 +84,7 @@ test('keyboard can edit a color, reach controls and activate a preset', async ({
   await page.keyboard.press(tabKey);
   await expect(page.getByRole('combobox', { name: 'Source color Color format' })).toBeFocused();
   await page.keyboard.press(tabKey);
-  await expect(page.getByRole('button', { name: 'Source color Copy CSS color' })).toBeFocused();
+  await expect(page.getByRole('button', { name: 'Source color Copy color value' })).toBeFocused();
   await page.getByRole('button', { name: 'Blue hour', exact: true }).focus();
   await page.keyboard.press('Enter');
   await expect(source(page)).toHaveValue('#507DA6');
