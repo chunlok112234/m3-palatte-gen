@@ -1,0 +1,11 @@
+.color-format{position:relative;flex-shrink:0;display:flex;align-items:center;color:var(--muted)}
+.color-format select{appearance:none;background:var(--soft);color:var(--ink);border:0;border-radius:5px;font-size:10px;padding:8px 20px 8px 7px;cursor:pointer}
+.color-format svg{position:absolute;right:5px;pointer-events:none}
+.color-format option{background:var(--card);color:var(--ink)}
+.color-value{flex:1;min-width:0;font:12px monospace;color:var(--muted)}
+.color-channels{display:flex;gap:8px;margin-top:10px}
+.color-channels>label{flex:1;min-width:0}
+.color-channels label>span{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:5px}
+.color-channels input{width:100%;min-width:0;padding:8px 4px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);font:12px monospace;appearance:textfield}
+.color-channels input::-webkit-inner-spin-button,.color-channels input::-webkit-outer-spin-button{appearance:none;margin:0}
+.color-channels input[aria-invalid=true]{border-color:#c03d30}

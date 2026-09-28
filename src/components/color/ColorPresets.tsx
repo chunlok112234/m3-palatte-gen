@@ -1,0 +1,4 @@
+import { type CSSProperties } from "react";
+import { Check } from "lucide-react";
+import { moods, type ColorLabels } from "@/lib/color-labels";
+export default function ColorPresets({ colors, applyColors, t }: { colors: string[]; applyColors: (colors: string[]) => void; t: ColorLabels }) { return (          <div className="mood-section"><span className="tiny-label">{t.presets}</span><div className="moods">{moods.map(mood => <button key={mood.key} title={t[mood.key]} aria-label={t[mood.key]} aria-pressed={colors[0] === mood.color} className={colors[0] === mood.color ? "active" : ""} style={{ "--mood": mood.color } as CSSProperties} onClick={() => applyColors([mood.color, colors[1], colors[2]])}>{colors[0] === mood.color && <Check size={16}/>}</button>)}</div><div className="mood-labels"><span>{t.mint}</span><span>{t.olive}</span></div></div>); }

@@ -1,0 +1,7 @@
+import type { ColorLabels } from "@/lib/color-labels";
+import { humanize } from "@/lib/color-labels";
+import { type createPalette, tones } from "@/lib/palette";
+import { contrastText } from "@/lib/color";
+import { hexFromArgb } from "@material/material-color-utilities";
+import { ArrowDown, Code2, Copy } from "lucide-react";
+export default function TonalPalette({result, t, copy}: {result: ReturnType<typeof createPalette>; t: ColorLabels; copy: (value: string) => void}) { return (<div className="tonal-content" role="tabpanel" id="tonal-panel" aria-labelledby="tonal-tab"><div className="tonal-top"><span>{t.toneHelp}</span><span>HCT <ArrowDown size={12}/></span></div><div className="tonal-scroll"><div className="tone-grid"><div className="tone-header"><span/>{tones.map(tone => <span key={tone}>{tone}</span>)}</div>{Object.entries(result.palettes).map(([name, palette]) => <div className="tone-row" key={name}><span className="tone-name">{t[name as keyof typeof t] || humanize(name)}</span>{tones.map(tone => { const hex = hexFromArgb(palette.tone(tone)).toUpperCase(); return <button key={tone} style={{ background: hex, color: contrastText(hex) }} title={`${humanize(name)} ${tone} · ${hex}`} aria-label={`${humanize(name)} ${tone}: ${hex}`} onClick={() => copy(hex)}><span>{tone}</span><Copy size={13}/></button>; })}</div>)}</div></div><div className="tonal-bottom"><span><span className="small-dot"/>{t.tag}</span><Code2 size={15}/></div></div>); }
