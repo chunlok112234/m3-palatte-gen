@@ -4,12 +4,14 @@ A responsive Material 3 palette studio built with Next.js, React, and the offici
 
 ## Development
 
+Use pnpm 11.5.2 (pinned in `package.json`) with Node.js 22.13 or later.
+
 ```sh
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
-Open `http://localhost:3000`. Use `npm run build` for a production build and `npm start` to serve it.
+Open `http://localhost:3000`. Use `pnpm run build` for a production build and `pnpm start` to serve it.
 
 ## Features
 
@@ -25,8 +27,8 @@ Color copying uses CSS syntax for HEX, RGB and HSL. HSV copies H S V values; CMY
 ## Validation
 
 ```sh
-npm run typecheck
-npm run build
+pnpm run typecheck
+pnpm run build
 ```
 
 ## Automated browser tests
@@ -36,19 +38,19 @@ mobile Chromium (Pixel 7). It starts and stops its own server on port **3100**;
 leave that port free. Node.js 22 is used in CI.
 
 ```sh
-npm ci
-npx playwright install --with-deps
-npm run test:e2e
+pnpm install --frozen-lockfile
+pnpm exec playwright install --with-deps
+pnpm run test:e2e
 ```
 
 For quicker local checks or debugging:
 
 ```sh
-npm run test:e2e -- --project=chromium
-npm run test:e2e -- tests/e2e/colors.spec.ts --project=chromium
-npm run test:e2e:ui
-npm run test:e2e:headed -- --project=chromium
-npm run test:e2e:report
+pnpm run test:e2e --project=chromium
+pnpm run test:e2e tests/e2e/colors.spec.ts --project=chromium
+pnpm run test:e2e:ui
+pnpm run test:e2e:headed --project=chromium
+pnpm run test:e2e:report
 ```
 
 ### Coverage
